@@ -1,0 +1,21 @@
+-- Tabela de usuários
+CREATE TABLE usuarios (
+                          id SERIAL PRIMARY KEY,
+                          nome VARCHAR(255) NOT NULL,
+                          email VARCHAR(255) UNIQUE NOT NULL,
+                          cpf CHAR(11) UNIQUE NOT NULL, -- CPF armazenado sem pontos e traço
+                          senha_hash TEXT NOT NULL,
+                          genero VARCHAR(20),
+                          data_nascimento DATE NOT NULL,
+                          telefone VARCHAR(15),
+                          email_status VARCHAR(50), -- Status do email: 'válido', 'inválido', 'temporário', etc.
+                          cpf_status VARCHAR(50), -- Status do CPF: 'regular', 'irregular', etc.
+                          email_verificado BOOLEAN DEFAULT FALSE, -- Indicador de se o e-mail foi verificado via API
+                          cpf_verificado BOOLEAN DEFAULT FALSE, -- Indicador de se o CPF foi verificado via API
+                          data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Índices para garantir a busca rápida por CPF e e-mail
+CREATE INDEX idx_email ON usuarios(email);
+CREATE INDEX idx_cpf ON usuarios(cpf);
